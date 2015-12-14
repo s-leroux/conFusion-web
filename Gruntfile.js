@@ -5,8 +5,9 @@ module.exports = function (grunt) {
   require('time-grunt')(grunt);
 
   // Automatically load required Grunt tasks
-  require('jit-grunt')(grunt);
-
+  require('jit-grunt')(grunt, {
+    useminPrepare: 'grunt-usemin'
+  });
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -56,14 +57,74 @@ module.exports = function (grunt) {
         build:{
             src: [ 'dist/']
         }
-    }
+    },
+
+    useminPrepare: {
+        html: 'app/menu.html',
+        options: {
+            dest: 'dist'
+        }
+    },
+      // Concat
+    concat: {
+        options: {
+            separator: ';'
+        },
+        // dist configuration is provided by useminPrepare
+        dist: {}
+    },
+      // Uglify
+    uglify: {
+        // dist configuration is provided by useminPrepare
+        dist: {}
+    },
+    cssmin: {
+        dist: {}
+    },
+      // Filerev
+    filerev: {
+        options: {
+            encoding: 'utf8',
+            algorithm: 'md5',
+            length: 20
+        },
+        release: {
+            // filerev:release hashes(md5) all assets (images, js and css )
+            // in dist directory
+            files: [{
+                src: [
+                    'dist/scripts/*.js',
+                    'dist/styles/*.css',
+                ]
+            }]
+        }
+    },
+      // Usemin
+      // Replaces all assets with their revved version in html and css files.
+      // options.assetDirs contains the directories for finding the assets
+      // according to their relative paths
+    usemin: {
+        html: ['dist/*.html'],
+        css: ['dist/styles/*.css'],
+        options: {
+            assetsDirs: ['dist', 'dist/styles']
+        }
+    },
+
   });
 
   grunt.registerTask('default',['build']);
   grunt.registerTask('build', [
     'jshint',
     'clean',
-    'copy'
+
+    'useminPrepare',
+    'concat',
+    'cssmin',
+    'uglify',
+    'copy',
+    'filerev',
+    'usemin',
   ]);
 
 };
