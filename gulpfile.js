@@ -32,15 +32,26 @@ gulp.task('clean', function() {
 // Default task
 gulp.task('default', ['usemin', 'imagemin','copyfonts']);
 
+function makeUseminTask(tName, fName) {
+    gulp.task(tName,['clean'], function () {
+      return gulp.src(fName)
+          .pipe(usemin({
+            css:[minifycss(),rev()],
+            js: [ngannotate(),uglify(),rev()]
+          }))
+          .pipe(gulp.dest('dist/'));
+    });
+}
 
-gulp.task('usemin',['clean', 'jshint'], function () {
-  return gulp.src('./app/menu.html')
-      .pipe(usemin({
-        css:[minifycss(),rev()],
-        js: [ngannotate(),uglify(),rev()]
-      }))
-      .pipe(gulp.dest('dist/'));
-});
+var htmlSrc = ['./app/menu.html', './app/contactus.html']
+var usemin_deps = ['jshint']
+for (fName of htmlSrc) {
+    var tName = 'usemin_' + usemin_deps.length;
+    usemin_deps.push(tName)
+    makeUseminTask(tName, fName);
+}
+
+gulp.task('usemin', usemin_deps);
 
 // Images
 gulp.task('imagemin', ['clean'], function() {
