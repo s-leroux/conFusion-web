@@ -32,6 +32,12 @@
         <div class="row row-content" ng-controller="MenuController">
             <div class="col-xs-12">
 
+                 <button ng-click="toggleDetails()" 
+                        class="btn btn-xs btn-primary pull-right"
+                        type="button">
+                    {{showDetails ? 'Hide Details':'Show Details'}}
+                </button>  
+
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation"
                      ng-class="{active:isSelected(1)}">
@@ -72,7 +78,7 @@
                         <h2 class="media-heading">{{dish.name}}
                          <span class="label label-danger">{{dish.label}}</span>
                          <span class="badge">{{dish.price | currency}}</span></h2>
-                        <p>{{dish.description}}</p>
+                        <p ng-show="showDetails">{{dish.description}}</p>
                     </div>
                 </li>
                 </ul>
