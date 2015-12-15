@@ -1,7 +1,7 @@
 'use strict';
 angular.module('confusionApp', [])
 
-        .controller('menuController', function() {
+        .controller('MenuController', function() {
             var dishes=[
                          {
                            name:'Uthapizza',
