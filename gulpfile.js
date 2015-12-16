@@ -43,8 +43,10 @@ function makeUseminTask(tName, fName) {
     });
 }
 
-var htmlSrc = ['./app/menu.html', './app/contactus.html']
-var usemin_deps = ['jshint']
+var htmlSrc = [ './app/menu.html', 
+                './app/contactus.html', 
+                './app/dishdetail.html'];
+var usemin_deps = ['jshint'];
 for (fName of htmlSrc) {
     var tName = 'usemin_' + usemin_deps.length;
     usemin_deps.push(tName)
