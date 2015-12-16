@@ -62,12 +62,17 @@ gulp.task('imagemin', ['clean'], function() {
     ;
 });
 
-gulp.task('copyfonts', ['clean'], function() {
+gulp.task('copyfonts_awesome', ['clean'], function() {
    return gulp.src('./bower_components/font-awesome/fonts/**/*.{ttf,woff,eof,svg}*')
-   .pipe(gulp.dest('./dist/fonts'));
-   gulp.src('./bower_components/bootstrap/dist/fonts/**/*.{ttf,woff,eof,svg}*')
+   .pipe(gulp.dest('./dist/fonts'));    
+})
+
+gulp.task('copyfonts_bootstrap', ['clean'], function() {
+   return gulp.src('./bower_components/bootstrap/dist/fonts/**/*.{ttf,woff,eof,svg}*')
    .pipe(gulp.dest('./dist/fonts'));
 });
+
+gulp.task('copyfonts', ['copyfonts_awesome', 'copyfonts_bootstrap']);
 
 
 // Watch
