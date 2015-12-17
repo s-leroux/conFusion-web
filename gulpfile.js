@@ -44,6 +44,7 @@ function makeUseminTask(tName, fName) {
 }
 
 var htmlSrc = [ './app/menu.html', 
+                './app/index.html', 
                 './app/contactus.html', 
                 './app/dishdetail.html'];
 var usemin_deps = ['jshint'];
@@ -100,7 +101,7 @@ gulp.task('browser-sync', ['default'], function () {
     browserSync.init(files, {
         server: {
             baseDir: "dist",
-            index: "menu.html"
+            index: "index.html"
         }
     });
 
