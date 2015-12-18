@@ -12,32 +12,35 @@ angular.module('confusionApp', ['ui.router'])
                         templateUrl : 'views/header.html',
                     },
                     'content': {
-                        template : '<h1>To be Completed</h1>',
+                        templateUrl : 'views/home.html',
                         controller  : 'IndexController'
                     },
                     'footer': {
                         templateUrl : 'views/footer.html',
                     }
                 }
+
             })
-                    // route for the aboutus page
+        
+            // route for the aboutus page
             .state('app.aboutus', {
                 url:'aboutus',
                 views: {
                     'content@': {
-                        template: '<h1>To be Completed</h1>',
-                        controller  : 'AboutController'
-                   }
+                        templateUrl : 'views/aboutus.html',
+                        controller  : 'AboutController'                  
+                    }
                 }
             })
-                    // route for the contactus page
+        
+            // route for the contactus page
             .state('app.contactus', {
                 url:'contactus',
                 views: {
                     'content@': {
                         templateUrl : 'views/contactus.html',
-                        controller  : 'ContactController'
-                                      }
+                        controller  : 'ContactController'                  
+                    }
                 }
             })
 
@@ -51,7 +54,7 @@ angular.module('confusionApp', ['ui.router'])
                     }
                 }
             })
-
+            
             // route for the dishdetail page
             .state('app.dishdetails', {
                 url: 'menu/:id',
