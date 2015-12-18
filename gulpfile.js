@@ -32,26 +32,32 @@ gulp.task('clean', function() {
 // Default task
 gulp.task('default', ['usemin', 'imagemin','copyfonts']);
 
-function makeUseminTask(tName, fName) {
+function makeUseminTask(tName, fName, dest) {
     gulp.task(tName,['clean'], function () {
       return gulp.src(fName)
           .pipe(usemin({
             css:[minifycss(),rev()],
             js: [ngannotate(),uglify(),rev()]
           }))
-          .pipe(gulp.dest('dist/'));
+          .pipe(gulp.dest(dest));
     });
 }
 
-var htmlSrc = [ './app/menu.html', 
-                './app/index.html', 
-                './app/contactus.html', 
-                './app/dishdetail.html'];
+var htmlSrc = [ './app/index.html', 
+                './app/views/menu.html', 
+                './app/views/contactus.html', 
+                './app/views/dishdetail.html', 
+                './app/views/footer.html', 
+                './app/views/header.html'];
 var usemin_deps = ['jshint'];
 for (fName of htmlSrc) {
-    var tName = 'usemin_' + usemin_deps.length;
+    var baseName = fName.split(/[/.]/).splice(-2,1)[0];
+    console.log(fName);
+    console.log(baseName);
+    var dirName = fName.substr(0, fName.lastIndexOf(baseName+"."));
+    var tName = 'usemin_' + baseName;
     usemin_deps.push(tName)
-    makeUseminTask(tName, fName);
+    makeUseminTask(tName, fName, dirName.replace("./app/","./dist/"));
 }
 
 gulp.task('usemin', usemin_deps);
@@ -101,8 +107,8 @@ gulp.task('browser-sync', ['default'], function () {
     browserSync.init(files, {
         server: {
             baseDir: "dist",
-            // index: "index.html",
-            directory: true
+            index: "index.html",
+            // directory: true
         }
     });
 

@@ -61,8 +61,8 @@ angular.module('confusionApp')
             };
         }])
 
-        .controller('DishDetailController', ['menuService', '$routeParams', function(menuService, $routeParams) {
-            this.dish = menuService.getDish(parseInt($routeParams.id, 10));
+        .controller('DishDetailController', ['menuService', '$stateParams', function(menuService, $stateParams) {
+            this.dish = menuService.getDish(parseInt($stateParams.id, 10));
         }])
         
         // ASSIGNMENT 3
