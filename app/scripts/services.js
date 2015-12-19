@@ -92,13 +92,19 @@ angular.module('confusionApp')
             menuService.getDishes = function() {
                 return dishes;
             };
-            menuService.getDish = function(index) {
-                return dishes[index];
+            menuService.getDish = function(id) {
+                return dishes.find(function(dish) { return dish._id === id; });
             };
 
 
             // implement a function named getPromotion
             // that returns a selected promotion.
+
+            // Please, see on the forum why I didn't use "promotions[index]":
+            // https://www.coursera.org/learn/angular-js/discussions/EEgRdaXaEeW2dA51rBQ9Ew
+            menuService.getPromotion = function(id) {
+                return promotions.find(function(promotion) { return promotion._id === id; });
+            };
 
             return menuService;
     })
@@ -144,6 +150,19 @@ angular.module('confusionApp')
             // Remember this is a factory not a service
     
     
+            corpfac.getLeaders = function() {
+              return leadership;
+            };
+
+            // Please, see on the forum why I didn't use "leadership[index]":
+            // https://www.coursera.org/learn/angular-js/discussions/EEgRdaXaEeW2dA51rBQ9Ew
+            // (assuming here that abbr is a *key* for leadership positions)
+            corpfac.getLeader = function(abbr) {
+                return leadership.find(function(leader) { return leader.abbr === abbr; });
+            };
+
+
+            return corpfac;
         })
 
 

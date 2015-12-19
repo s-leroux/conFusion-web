@@ -86,4 +86,17 @@ angular.module('confusionApp')
             };
         })
 
+        .controller('IndexController', ['corporateFactory', 'menuService', '$scope',
+            function(corporateFactory, menuService, $scope) {
+                $scope.ec = corporateFactory.getLeader("EC");
+                $scope.featured = menuService.getDish(0);
+                $scope.promotion = menuService.getPromotion(0);
+            }])
+
+
+        .controller('AboutController', ['corporateFactory', '$scope', 
+            function(corporateFactory, $scope) {
+                $scope.leaders = corporateFactory.getLeaders();
+            }])
+
         ;

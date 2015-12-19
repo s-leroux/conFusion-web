@@ -5,9 +5,32 @@
                 <p style="padding:20px;"></p>
                 <h3 align=center>Our Lipsmacking Culinary Creations</h3>
             </div>
+
             <div class="col-xs-12 col-sm-9 col-sm-pull-3">
-				<h4>Implement the Featured Dish Here</h4>
+
+                <!-- Featured -->
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <a ui-sref="app.dishdetails({id: featured._id})">
+                        <img class="media-object img-thumbnail"
+                         src="{{featured.image}}" alt="{{featured.name}}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading">{{featured.name}}
+                           <span class="label label-danger label-xs">{{featured.label}}</span>
+                           <span class="badge">{{featured.price}}</span>
+                        </h2>
+                        <p>{{featured.description}}</p>
+                        <p><a class="btn btn-primary btn-xs" ui-sref="app.dishdetails({id: featured._id})">More &raquo;</a></p>
+                    </div>
+                </div>
+                <!-- ... -->
+
             </div>
+
+
+
         </div>
 
 
@@ -16,9 +39,28 @@
                 <p style="padding:20px;"></p>
                 <h3 align=center>This Month's Promotions</h3>
             </div>
+
+            <!-- Promotions -->
             <div class="col-xs-12 col-sm-9">
-				<h4>Implement the Promotion Here</h4>
+                <div class="media">
+                    <div class="media-body">
+                        <h2 class="media-heading">{{promotion.name}}
+                           <span class="label label-danger label-xs">{{promotion.label}}</span>
+                        </h2>
+                        <p>{{promotion.description}}</p>
+
+                        <p><a class="btn btn-primary btn-xs" ui-sref="app.menu">More &raquo;</a></p>
+                    </div>
+                    <div class="media-right media-middle">
+                        <a ui-sref="app.menu">
+                        <img class="media-object img-thumbnail"
+                         src="{{promotion.image}}" alt="{{promotion.name}}">
+                        </a>
+                    </div>
+                </div>
             </div>
+
+
         </div>
 
         <div class="row row-content">
@@ -26,8 +68,27 @@
                 <p style="padding:20px;"></p>
                 <h3 align=center>Meet our Culinary Specialists</h3>
             </div>
+
+
+            <!-- Executive Chef -->
             <div class="col-xs-12 col-sm-9 col-sm-pull-3">
-				<h4>Implement the Executive Chef Info Here</h4>
+
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <a ui-sref="app.aboutus">                    
+                        <img class="media-object img-thumbnail"
+                         src="{{ec.image}}" alt="{{ec.name}}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading">{{ec.name}} <small>{{ec.designation}}</small></h2>
+                        <p>{{ec.description}}</p>
+                        <p><a class="btn btn-primary btn-xs" ui-sref="app.aboutus">More &raquo;</a></p>
+                    </div>
+                </div>
+
             </div>
+
+
         </div>
     </div>

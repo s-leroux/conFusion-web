@@ -47,6 +47,8 @@ var htmlSrc = [ './app/index.html',
                 './app/views/menu.html', 
                 './app/views/contactus.html', 
                 './app/views/dishdetail.html', 
+                './app/views/aboutus.html', 
+                './app/views/home.html', 
                 './app/views/footer.html', 
                 './app/views/header.html'];
 var usemin_deps = ['jshint'];
