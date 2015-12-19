@@ -62,7 +62,6 @@ angular.module('confusionApp', ['ui.router'])
                     'content@': {
                         templateUrl : 'views/dishdetail.html',
                         controller  : 'DishDetailController',
-                        controllerAs: 'ddCtrl'
                    }
                 }
             });

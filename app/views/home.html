@@ -11,7 +11,7 @@
                 <!-- Featured -->
                 <div class="media">
                     <div class="media-left media-middle">
-                        <a ui-sref="app.dishdetails({id: featured._id})">
+                        <a ui-sref="app.dishdetails({id: featured.id})">
                         <img class="media-object img-thumbnail"
                          src="{{featured.image}}" alt="{{featured.name}}">
                         </a>
@@ -22,7 +22,7 @@
                            <span class="badge">{{featured.price}}</span>
                         </h2>
                         <p>{{featured.description}}</p>
-                        <p><a class="btn btn-primary btn-xs" ui-sref="app.dishdetails({id: featured._id})">More &raquo;</a></p>
+                        <p><a class="btn btn-primary btn-xs" ui-sref="app.dishdetails({id: featured.id})">More &raquo;</a></p>
                     </div>
                 </div>
                 <!-- ... -->

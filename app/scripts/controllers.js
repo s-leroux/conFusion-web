@@ -5,7 +5,14 @@ angular.module('confusionApp')
 
             $scope.tab = 1;
             $scope.filtText = '';
-            $scope.dishes = menuService.getDishes();
+
+            $scope.dishes= {};
+            menuService.getDishes()
+            .then(
+                function(response) {
+                    $scope.dishes = response.data;
+                }
+            );
 
             $scope.select = function(setTab) {
                 $scope.tab = setTab;
@@ -61,8 +68,15 @@ angular.module('confusionApp')
             };
         }])
 
-        .controller('DishDetailController', ['menuService', '$stateParams', function(menuService, $stateParams) {
-            this.dish = menuService.getDish(parseInt($stateParams.id, 10));
+        .controller('DishDetailController', ['$scope', 'menuService', '$stateParams', function($scope, menuService, $stateParams) {
+            $scope.dish = {};
+            menuService.getDish(parseInt($stateParams.id,10))
+            .then(
+                function(response){
+                    $scope.dish = response.data;
+                    $scope.showDish=true;
+                }
+            );
         }])
         
         // ASSIGNMENT 3
@@ -88,15 +102,43 @@ angular.module('confusionApp')
 
         .controller('IndexController', ['corporateFactory', 'menuService', '$scope',
             function(corporateFactory, menuService, $scope) {
-                $scope.ec = corporateFactory.getLeader("EC");
-                $scope.featured = menuService.getDish(0);
-                $scope.promotion = menuService.getPromotion(0);
+
+                $scope.dish = {};
+
+                menuService.getDish(0)
+                .then(
+                    function(response){
+                        $scope.featured = response.data;
+                        $scope.showFeatured = true;
+                    }
+                );
+                menuService.getPromotion(0)
+                .then(
+                    function(response){
+                        $scope.promotion = response.data;
+                        $scope.showPromotion = true;
+                    }
+                );
+                corporateFactory.getLeader('EC')
+                .then(
+                    function(response){
+                        // As I query by an attribute (abbr) instead
+                        // of by id, the response is an array
+                        $scope.ec = response.data[0];
+                        $scope.showEC = true;
+                    }
+                );
             }])
 
 
         .controller('AboutController', ['corporateFactory', '$scope', 
             function(corporateFactory, $scope) {
-                $scope.leaders = corporateFactory.getLeaders();
+                corporateFactory.getLeaders()
+                .then(
+                    function(response){
+                        $scope.leaders = response.data;
+                    }
+                );
             }])
 
         ;

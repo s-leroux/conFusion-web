@@ -12,16 +12,16 @@
                 <div class="media-left">
                   <a href="#">
                     <img class="media-object img-thumbnail" 
-                          src="{{ddCtrl.dish.image}}" 
-                          alt="{{ddCtrl.dish.name}}">
+                          src="{{dish.image}}" 
+                          alt="{{dish.name}}">
                   </a>
                 </div>
                 <div class="media-body">
-                  <h2 class="media-heading">{{ddCtrl.dish.name}}
-                    <span class="label label-danger">{{ddCtrl.dish.label}}</span>
-                    <span class="badge">{{ddCtrl.dish.price | currency}}</span>
+                  <h2 class="media-heading">{{dish.name}}
+                    <span class="label label-danger">{{dish.label}}</span>
+                    <span class="badge">{{dish.price | currency}}</span>
                   </h2>
-                  <p>{{ddCtrl.dish.description}}</p>
+                  <p>{{dish.description}}</p>
                 </div>
               </div>
 
@@ -30,7 +30,7 @@
                 <h3>Customer comments
                   <small>&nbsp;Sort by: <input ng-model="orderProp"></small>
                 </h3>
-              <blockquote  ng-repeat="comment in ddCtrl.dish.comments | orderBy:orderProp">
+              <blockquote  ng-repeat="comment in dish.comments | orderBy:orderProp">
                 <p>{{comment.rating}} Stars</p>
                 <p>{{comment.comment}}</p>
                 <footer>{{comment.author}}, {{comment.date | date:"MMM. dd, yyyy"}}</footer>
@@ -77,7 +77,7 @@
                 -->
                 <form class="form-horizontal" role="form"
                     name="commentForm" 
-                    ng-submit="cfCtrl.sendComment(ddCtrl.dish);cfCtrl.reset(commentForm)"
+                    ng-submit="cfCtrl.sendComment(dish);cfCtrl.reset(commentForm)"
                     no-validate>
 
                     <div class="form-group"  
