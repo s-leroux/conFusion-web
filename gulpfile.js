@@ -25,44 +25,21 @@ gulp.task('jshint', function() {
 var dirtyBuild = false;
 gulp.task('clean', function() {
     if (!dirtyBuild) {
-        return del(['dist']);
+        return del(['dist/**/*']);
     }
 });
 
 // Default task
 gulp.task('default', ['usemin', 'imagemin','copyfonts']);
 
-function makeUseminTask(tName, fName, dest) {
-    gulp.task(tName,['clean'], function () {
-      return gulp.src(fName)
-          .pipe(usemin({
-            css:[minifycss(),rev()],
-            js: [ngannotate(),uglify(),rev()]
-          }))
-          .pipe(gulp.dest(dest));
-    });
-}
-
-var htmlSrc = [ './app/index.html', 
-                './app/views/menu.html', 
-                './app/views/contactus.html', 
-                './app/views/dishdetail.html', 
-                './app/views/aboutus.html', 
-                './app/views/home.html', 
-                './app/views/footer.html', 
-                './app/views/header.html'];
-var usemin_deps = ['jshint'];
-for (fName of htmlSrc) {
-    var baseName = fName.split(/[/.]/).splice(-2,1)[0];
-    console.log(fName);
-    console.log(baseName);
-    var dirName = fName.substr(0, fName.lastIndexOf(baseName+"."));
-    var tName = 'usemin_' + baseName;
-    usemin_deps.push(tName)
-    makeUseminTask(tName, fName, dirName.replace("./app/","./dist/"));
-}
-
-gulp.task('usemin', usemin_deps);
+gulp.task('usemin',['clean', 'jshint'], function () {
+  return gulp.src('./app/**/*.html')
+      .pipe(usemin({
+        css:[minifycss(),rev()],
+        js: [ngannotate(),uglify(),rev()]
+      }))
+      .pipe(gulp.dest('dist/'));
+});
 
 // Images
 gulp.task('imagemin', ['clean'], function() {
@@ -87,7 +64,7 @@ gulp.task('copyfonts', ['copyfonts_awesome', 'copyfonts_bootstrap']);
 
 
 // Watch
-gulp.task('watch', ['browser-sync'], function() {
+gulp.task('watch', ['default'], function() {
   // Watch .js files
   dirtyBuild = true;
   gulp.watch('{app/scripts/**/*.js,app/styles/**/*.css,app/**/*.html}', 
@@ -95,25 +72,4 @@ gulp.task('watch', ['browser-sync'], function() {
   // Watch image files
   gulp.watch('app/images/**/*', ['imagemin']);
 
-});
-
-gulp.task('browser-sync', ['default'], function () {
-    var files = [
-        'app/**/*.html',
-        'app/styles/**/*.css',
-        'app/images/**/*.png',
-        'app/scripts/**/*.js',
-        'dist/**/*'
-    ];
-
-    browserSync.init(files, {
-        server: {
-            baseDir: "dist",
-            index: "index.html",
-            // directory: true
-        }
-    });
-
-    // Watch any files in dist/, reload on change
-    gulp.watch(['dist/**']).on('change', browserSync.reload);
 });
