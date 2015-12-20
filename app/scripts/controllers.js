@@ -5,12 +5,19 @@ angular.module('confusionApp')
 
             $scope.tab = 1;
             $scope.filtText = '';
+            $scope.message = "Loading...";
 
             $scope.dishes= {};
+            $scope.showMenu = false;
+
             menuService.getDishes()
             .then(
                 function(response) {
                     $scope.dishes = response.data;
+                    $scope.showMenu = true;
+                },
+                function(response) {
+                    $scope.message = "Error: "+response.status + " " + response.statusText;
                 }
             );
 
@@ -70,11 +77,16 @@ angular.module('confusionApp')
 
         .controller('DishDetailController', ['$scope', 'menuService', '$stateParams', function($scope, menuService, $stateParams) {
             $scope.dish = {};
+            $scope.showDish = false;
+            $scope.message = "Loading...";
             menuService.getDish(parseInt($stateParams.id,10))
             .then(
                 function(response){
                     $scope.dish = response.data;
                     $scope.showDish=true;
+                },
+                function(response) {
+                    $scope.message = "Error: "+response.status + " " + response.statusText;
                 }
             );
         }])
@@ -103,13 +115,24 @@ angular.module('confusionApp')
         .controller('IndexController', ['corporateFactory', 'menuService', '$scope',
             function(corporateFactory, menuService, $scope) {
 
-                $scope.dish = {};
+                $scope.featured = 
+                $scope.promotion = 
+                $scope.ec = {};
+                $scope.showLeaders = 
+                $scope.showPromotion = 
+                $scope.showEC = false;
+                $scope.messageFeatured = 
+                $scope.messagePromition = 
+                $scope.messageEC = "Loading...";
 
                 menuService.getDish(0)
                 .then(
                     function(response){
                         $scope.featured = response.data;
                         $scope.showFeatured = true;
+                    },
+                    function(response) {
+                        $scope.messageFeatured = "Error: "+response.status + " " + response.statusText;
                     }
                 );
                 menuService.getPromotion(0)
@@ -117,6 +140,9 @@ angular.module('confusionApp')
                     function(response){
                         $scope.promotion = response.data;
                         $scope.showPromotion = true;
+                    },
+                    function(response) {
+                        $scope.messagePromotion = "Error: "+response.status + " " + response.statusText;
                     }
                 );
                 corporateFactory.getLeader('EC')
@@ -126,6 +152,9 @@ angular.module('confusionApp')
                         // of by id, the response is an array
                         $scope.ec = response.data[0];
                         $scope.showEC = true;
+                    },
+                    function(response) {
+                        $scope.messageEC = "Error: "+response.status + " " + response.statusText;
                     }
                 );
             }])
@@ -133,10 +162,18 @@ angular.module('confusionApp')
 
         .controller('AboutController', ['corporateFactory', '$scope', 
             function(corporateFactory, $scope) {
+                $scope.leaders = {};
+                $scope.showLeaders = false;
+                $scope.message = "Loading...";
+
                 corporateFactory.getLeaders()
                 .then(
                     function(response){
                         $scope.leaders = response.data;
+                        $scope.showLeaders = true;
+                    },
+                    function(response) {
+                        $scope.message = "Error: "+response.status + " " + response.statusText;
                     }
                 );
             }])
