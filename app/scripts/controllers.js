@@ -56,21 +56,40 @@ angular.module('confusionApp')
             $scope.invalidChannelSelection = false;
                                 }])
 
-        .controller('FeedbackController', ['$scope', function($scope) {
-                        $scope.sendFeedback = function() {
-                                console.log($scope.feedback);
-                                if ($scope.feedback.agree && ($scope.feedback.mychannel === "")) {
+        .controller('FeedbackController', ['$scope', 'FeedbackDAO', function($scope, FeedbackDAO) {
+            $scope.sendFeedback = function() {
+                console.log($scope.feedback);
+                if ($scope.feedback.agree && ($scope.feedback.mychannel === "")) {
                     $scope.invalidChannelSelection = true;
                     console.log('incorrect');
                 }
                 else {
-                    $scope.invalidChannelSelection = false;
-                    $scope.feedback = {mychannel:"", firstName:"", lastName:"",
-                                       agree:false, email:"" };
-                    $scope.feedback.mychannel="";
+                    // Valid feedback
 
-                    $scope.feedbackForm.$setPristine();
-                    console.log($scope.feedback);
+                    /*
+                        Save a *new* feedback on the server using a POST request.
+                    */
+                    FeedbackDAO.save($scope.feedback, 
+                        function(){
+                            $scope.message = "Feedback sent";
+                            $scope.sent = true;
+
+                            // Reset form (only in case of success)
+                            $scope.invalidChannelSelection = false;
+                            $scope.feedback = {mychannel:"", firstName:"", lastName:"",
+                                               agree:false, email:"" };
+                            $scope.feedback.mychannel="";
+
+                            $scope.feedbackForm.$setPristine();
+                            console.log($scope.feedback);
+                        },
+                        function(response) {
+                            $scope.message = "Error: "+response.status + " " + response.statusText;
+                            $scope.sent = false;
+
+                        }
+                    );
+
                 }
             };
         }])
@@ -105,8 +124,12 @@ angular.module('confusionApp')
             this.sendComment = function(dish) {
               this.comment.date = new Date();
               dish.comments.push(this.comment);
-              dish.$update();
-              this.comment = { comment: "", rating: 5, author: "", date: null };
+              /*
+                push back the changes on the serve using a PUT request.
+              */
+              dish.$update(function() {
+                  this.comment = { comment: "", rating: 5, author: "", date: null };                
+              });
             };
 
             this.reset = function(form) {
@@ -136,7 +159,7 @@ angular.module('confusionApp')
                         $scope.messageFeatured = "Error: "+response.status + " " + response.statusText;
                     }
                 );
-                PromotionDAO.get({id:0},
+                PromotionDAO.getPromotion({id:0},
                     function(data){
                         $scope.promotion = data;
                         $scope.showPromotion = true;
