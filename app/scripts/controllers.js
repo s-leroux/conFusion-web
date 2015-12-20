@@ -1,7 +1,7 @@
 'use strict';
 angular.module('confusionApp')
 
-        .controller('MenuController', ['$scope', 'menuService', function($scope, menuService) {
+        .controller('MenuController', ['$scope', 'DishDAO', function($scope, DishDAO) {
 
             $scope.tab = 1;
             $scope.filtText = '';
@@ -10,10 +10,9 @@ angular.module('confusionApp')
             $scope.dishes= {};
             $scope.showMenu = false;
 
-            menuService.getDishes()
-            .then(
-                function(response) {
-                    $scope.dishes = response.data;
+            DishDAO.query(null, 
+                function(data) {
+                    $scope.dishes = data;
                     $scope.showMenu = true;
                 },
                 function(response) {
@@ -56,33 +55,16 @@ angular.module('confusionApp')
                         $scope.channels = channels;
             $scope.invalidChannelSelection = false;
                                 }])
-        .controller('FeedbackController', ['$scope', function($scope) {
-                        $scope.sendFeedback = function() {
-                                console.log($scope.feedback);
-                                if ($scope.feedback.agree && ($scope.feedback.mychannel === "")) {
-                    $scope.invalidChannelSelection = true;
-                    console.log('incorrect');
-                }
-                else {
-                    $scope.invalidChannelSelection = false;
-                    $scope.feedback = {mychannel:"", firstName:"", lastName:"",
-                                       agree:false, email:"" };
-                    $scope.feedback.mychannel="";
 
-                    $scope.feedbackForm.$setPristine();
-                    console.log($scope.feedback);
-                }
-            };
-        }])
-
-        .controller('DishDetailController', ['$scope', 'menuService', '$stateParams', function($scope, menuService, $stateParams) {
+        .controller('DishDetailController', ['$scope', 'DishDAO', '$stateParams', function($scope, DishDAO, $stateParams) {
             $scope.dish = {};
             $scope.showDish = false;
             $scope.message = "Loading...";
-            menuService.getDish(parseInt($stateParams.id,10))
-            .then(
-                function(response){
-                    $scope.dish = response.data;
+
+            DishDAO.get({id: parseInt($stateParams.id,10)},
+                function(data){
+                    console.log(data);
+                    $scope.dish = data;
                     $scope.showDish=true;
                 },
                 function(response) {
@@ -92,7 +74,7 @@ angular.module('confusionApp')
         }])
         
         // ASSIGNMENT 3
-        .controller('CommentFormController', function() {
+        .controller('FeedbackController', function() {
             /*
               I didn't use $scope to solve this problem as they will not be supported
               in Angular 2 according to this discution on the forum:
@@ -104,6 +86,7 @@ angular.module('confusionApp')
             this.sendComment = function(dish) {
               this.comment.date = new Date();
               dish.comments.push(this.comment);
+              dish.$save();
               this.comment = { comment: "", rating: 5, author: "", date: null };
             };
 
@@ -112,8 +95,8 @@ angular.module('confusionApp')
             };
         })
 
-        .controller('IndexController', ['corporateFactory', 'menuService', '$scope',
-            function(corporateFactory, menuService, $scope) {
+        .controller('IndexController', ['LeaderDAO', 'DishDAO', 'PromotionDAO', '$scope',
+            function(LeaderDAO, DishDAO, PromotionDAO, $scope) {
 
                 $scope.featured = 
                 $scope.promotion = 
@@ -125,32 +108,29 @@ angular.module('confusionApp')
                 $scope.messagePromition = 
                 $scope.messageEC = "Loading...";
 
-                menuService.getDish(0)
-                .then(
-                    function(response){
-                        $scope.featured = response.data;
+                DishDAO.get({id:0},
+                    function(data){
+                        $scope.featured = data;
                         $scope.showFeatured = true;
                     },
                     function(response) {
                         $scope.messageFeatured = "Error: "+response.status + " " + response.statusText;
                     }
                 );
-                menuService.getPromotion(0)
-                .then(
-                    function(response){
-                        $scope.promotion = response.data;
+                PromotionDAO.get({id:0},
+                    function(data){
+                        $scope.promotion = data;
                         $scope.showPromotion = true;
                     },
                     function(response) {
                         $scope.messagePromotion = "Error: "+response.status + " " + response.statusText;
                     }
                 );
-                corporateFactory.getLeader('EC')
-                .then(
-                    function(response){
+                LeaderDAO.getByRole({role:'EC'}, 
+                    function(data){
                         // As I query by an attribute (abbr) instead
                         // of by id, the response is an array
-                        $scope.ec = response.data[0];
+                        $scope.ec = data[0];
                         $scope.showEC = true;
                     },
                     function(response) {
@@ -160,16 +140,15 @@ angular.module('confusionApp')
             }])
 
 
-        .controller('AboutController', ['corporateFactory', '$scope', 
-            function(corporateFactory, $scope) {
+        .controller('AboutController', ['LeaderDAO', '$scope', 
+            function(LeaderDAO, $scope) {
                 $scope.leaders = {};
                 $scope.showLeaders = false;
                 $scope.message = "Loading...";
 
-                corporateFactory.getLeaders()
-                .then(
-                    function(response){
-                        $scope.leaders = response.data;
+                LeaderDAO.query(null, 
+                    function(data){
+                        $scope.leaders = data;
                         $scope.showLeaders = true;
                     },
                     function(response) {
