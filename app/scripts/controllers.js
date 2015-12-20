@@ -56,6 +56,25 @@ angular.module('confusionApp')
             $scope.invalidChannelSelection = false;
                                 }])
 
+        .controller('FeedbackController', ['$scope', function($scope) {
+                        $scope.sendFeedback = function() {
+                                console.log($scope.feedback);
+                                if ($scope.feedback.agree && ($scope.feedback.mychannel === "")) {
+                    $scope.invalidChannelSelection = true;
+                    console.log('incorrect');
+                }
+                else {
+                    $scope.invalidChannelSelection = false;
+                    $scope.feedback = {mychannel:"", firstName:"", lastName:"",
+                                       agree:false, email:"" };
+                    $scope.feedback.mychannel="";
+
+                    $scope.feedbackForm.$setPristine();
+                    console.log($scope.feedback);
+                }
+            };
+        }])
+
         .controller('DishDetailController', ['$scope', 'DishDAO', '$stateParams', function($scope, DishDAO, $stateParams) {
             $scope.dish = {};
             $scope.showDish = false;
@@ -74,7 +93,7 @@ angular.module('confusionApp')
         }])
         
         // ASSIGNMENT 3
-        .controller('FeedbackController', function() {
+        .controller('CommentFormController', function() {
             /*
               I didn't use $scope to solve this problem as they will not be supported
               in Angular 2 according to this discution on the forum:
@@ -86,7 +105,7 @@ angular.module('confusionApp')
             this.sendComment = function(dish) {
               this.comment.date = new Date();
               dish.comments.push(this.comment);
-              dish.$save();
+              dish.$update();
               this.comment = { comment: "", rating: 5, author: "", date: null };
             };
 

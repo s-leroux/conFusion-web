@@ -5,6 +5,7 @@ angular.module('confusionApp')
     .factory('DishDAO', ['$resource', 'baseURL', function($resource, baseURL) {
         return $resource(baseURL+'dishes/:id', null, {
             // extra methods
+            update: { method: 'PUT', params: { id: '@id' } }
         });
     }])
 
