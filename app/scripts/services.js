@@ -1,6 +1,6 @@
 'use strict';
 angular.module('confusionApp')
-    .constant("baseURL","http://localhost:3000/")
+    .constant("baseURL","https://confusion-basic-sylvain-leroux.herokuapp.com/")
 
     /*
         I didn't follow exactly the way things are implemented in the course

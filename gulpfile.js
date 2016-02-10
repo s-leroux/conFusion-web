@@ -30,14 +30,16 @@ gulp.task('clean', function() {
 });
 
 // Default task
-gulp.task('default', ['usemin', 'imagemin','copyfonts']);
+gulp.task('default', ['usemin', 'imagemin','copy']);
 
 gulp.task('usemin',['clean', 'jshint'], function () {
-  return gulp.src('./app/**/*.html')
+  return gulp.src('./app/**/*.{html,js,css}')
+  /*
       .pipe(usemin({
         css:[minifycss(),rev()],
-        js: [ngannotate(),uglify(),rev()]
+        // js: [ngannotate(),uglify(),rev()]
       }))
+  */
       .pipe(gulp.dest('dist/'));
 });
 
@@ -51,8 +53,17 @@ gulp.task('imagemin', ['clean'], function() {
 });
 
 gulp.task('copyfonts_awesome', ['clean'], function() {
-   return gulp.src('./bower_components/font-awesome/fonts/**/*.{ttf,woff,eof,svg}*')
+   return gulp.src([
+      './bower_components/font-awesome/fonts/**/*.{ttf,woff,eof,svg}*',
+      ])
    .pipe(gulp.dest('./dist/fonts'));    
+})
+
+gulp.task('copyfonts_awesome_css', ['clean'], function() {
+   return gulp.src([
+      './bower_components/font-awesome/css/font-awesome.min.css',
+      ])
+   .pipe(gulp.dest('./dist/css'));    
 })
 
 gulp.task('copyfonts_bootstrap', ['clean'], function() {
@@ -60,7 +71,34 @@ gulp.task('copyfonts_bootstrap', ['clean'], function() {
    .pipe(gulp.dest('./dist/fonts'));
 });
 
-gulp.task('copyfonts', ['copyfonts_awesome', 'copyfonts_bootstrap']);
+gulp.task('copy_angular', ['clean'], function() {
+   return gulp.src('./bower_components/angular/angular.min.js')
+   .pipe(gulp.dest('./dist/scripts'));
+});
+
+gulp.task('copy_angular_ui_router', ['clean'], function() {
+   return gulp.src('./bower_components/angular-ui-router/release/angular-ui-router.min.js')
+   .pipe(gulp.dest('./dist/scripts'));
+});
+
+gulp.task('copy_angular_resource', ['clean'], function() {
+   return gulp.src('./bower_components/angular-resource/angular-resource.min.js')
+   .pipe(gulp.dest('./dist/scripts'));
+});
+
+gulp.task('copy_bootstrap', ['clean'], function() {
+   return gulp.src('./bower_components/bootstrap/dist/css/{bootstrap,bootstrap-theme}.min.css')
+   .pipe(gulp.dest('./dist/css'));
+});
+
+
+gulp.task('copy', ['copyfonts_awesome',
+                   'copyfonts_awesome_css',
+                   'copyfonts_bootstrap',
+                   'copy_bootstrap',
+                   'copy_angular',
+                   'copy_angular_resource',
+                   'copy_angular_ui_router']);
 
 
 // Watch

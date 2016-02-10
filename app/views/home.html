@@ -16,13 +16,13 @@
                     <div class="media-left media-middle">
                         <a ui-sref="app.dishdetails({id: featured.id})">
                         <img class="media-object img-thumbnail"
-                         src="{{featured.image}}" alt="{{featured.name}}">
+                         ng-src="{{featured.image}}" alt="{{featured.name}}">
                         </a>
                     </div>
                     <div class="media-body">
                         <h2 class="media-heading">{{featured.name}}
                            <span class="label label-danger label-xs">{{featured.label}}</span>
-                           <span class="badge">{{featured.price | curency}}</span>
+                           <span class="badge">{{featured.price | currency}}</span>
                         </h2>
                         <p>{{featured.description}}</p>
                         <p><a class="btn btn-primary btn-xs" ui-sref="app.dishdetails({id: featured.id})">More &raquo;</a></p>
@@ -60,7 +60,7 @@
                     <div class="media-right media-middle">
                         <a ui-sref="app.menu">
                         <img class="media-object img-thumbnail"
-                         src="{{promotion.image}}" alt="{{promotion.name}}">
+                         ng-src="{{promotion.image}}" alt="{{promotion.name}}">
                         </a>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                     <div class="media-left media-middle">
                         <a ui-sref="app.aboutus">                    
                         <img class="media-object img-thumbnail"
-                         src="{{ec.image}}" alt="{{ec.name}}">
+                         ng-src="{{ec.image}}" alt="{{ec.name}}">
                         </a>
                     </div>
                     <div class="media-body">
