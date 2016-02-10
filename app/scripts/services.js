@@ -2,6 +2,16 @@
 angular.module('confusionApp')
     .constant("baseURL","https://confusion-basic-sylvain-leroux.herokuapp.com/")
 
+    .factory('URLResolver', ['baseURL', function(baseURL) {
+      return function(url) {
+        if (typeof url === "undefined") {
+          return "";
+        }
+
+        return baseURL + url;
+      };
+    }])
+
     /*
         I didn't follow exactly the way things are implemented in the course
         as the given design didn't seem good to me.

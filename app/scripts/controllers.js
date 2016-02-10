@@ -1,7 +1,8 @@
 'use strict';
 angular.module('confusionApp')
 
-        .controller('MenuController', ['$scope', 'DishDAO', function($scope, DishDAO) {
+        .controller('MenuController', ['$scope', 'DishDAO', 'URLResolver',
+                    function($scope, DishDAO, URLResolver) {
 
             $scope.tab = 1;
             $scope.filtText = '';
@@ -47,6 +48,7 @@ angular.module('confusionApp')
                 $scope.showDetails = !$scope.showDetails;
             };
 
+            $scope.urlResolve = URLResolver;
         }])
 
         .controller('ContactController', ['$scope', function($scope) {
@@ -94,10 +96,12 @@ angular.module('confusionApp')
             };
         }])
 
-        .controller('DishDetailController', ['$scope', 'DishDAO', '$stateParams', function($scope, DishDAO, $stateParams) {
+        .controller('DishDetailController', ['$scope', 'DishDAO', 'URLResolver',
+                 '$stateParams', function($scope, DishDAO, $stateParams, URLResolver) {
             $scope.dish = {};
             $scope.showDish = false;
             $scope.message = "Loading...";
+            $scope.urlResolve = URLResolver;
 
             DishDAO.get({id: parseInt($stateParams.id,10)},
                 function(data){
@@ -137,8 +141,8 @@ angular.module('confusionApp')
             };
         })
 
-        .controller('IndexController', ['LeaderDAO', 'DishDAO', 'PromotionDAO', '$scope',
-            function(LeaderDAO, DishDAO, PromotionDAO, $scope) {
+        .controller('IndexController', ['LeaderDAO', 'DishDAO', 'PromotionDAO', '$scope', 'URLResolver',
+            function(LeaderDAO, DishDAO, PromotionDAO, $scope, URLResolver) {
 
                 $scope.featured = 
                 $scope.promotion = 
@@ -149,6 +153,7 @@ angular.module('confusionApp')
                 $scope.messageFeatured = 
                 $scope.messagePromition = 
                 $scope.messageEC = "Loading...";
+                $scope.urlResolve = URLResolver;
 
                 DishDAO.get({id:0},
                     function(data){
@@ -182,11 +187,12 @@ angular.module('confusionApp')
             }])
 
 
-        .controller('AboutController', ['LeaderDAO', '$scope', 
-            function(LeaderDAO, $scope) {
+        .controller('AboutController', ['LeaderDAO', '$scope', 'URLResolver',
+            function(LeaderDAO, $scope, URLResolver) {
                 $scope.leaders = {};
                 $scope.showLeaders = false;
                 $scope.message = "Loading...";
+                $scope.urlResolve = URLResolver;
 
                 LeaderDAO.query(null, 
                     function(data){

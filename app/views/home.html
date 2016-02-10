@@ -16,7 +16,7 @@
                     <div class="media-left media-middle">
                         <a ui-sref="app.dishdetails({id: featured.id})">
                         <img class="media-object img-thumbnail"
-                         ng-src="{{featured.image}}" alt="{{featured.name}}">
+                         ng-src="{{urlResolve(featured.image)}}" alt="{{featured.name}}">
                         </a>
                     </div>
                     <div class="media-body">
@@ -60,7 +60,7 @@
                     <div class="media-right media-middle">
                         <a ui-sref="app.menu">
                         <img class="media-object img-thumbnail"
-                         ng-src="{{promotion.image}}" alt="{{promotion.name}}">
+                         ng-src="{{urlResolve(promotion.image)}}" alt="{{promotion.name}}">
                         </a>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                     <div class="media-left media-middle">
                         <a ui-sref="app.aboutus">                    
                         <img class="media-object img-thumbnail"
-                         ng-src="{{ec.image}}" alt="{{ec.name}}">
+                         ng-src="{{urlResolve(ec.image)}}" alt="{{ec.name}}">
                         </a>
                     </div>
                     <div class="media-body">
