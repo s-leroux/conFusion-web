@@ -91,11 +91,17 @@ gulp.task('copy_bootstrap', ['clean'], function() {
    .pipe(gulp.dest('./dist/css'));
 });
 
+gulp.task('copy_ui_bootstrap', ['clean'], function() {
+   return gulp.src('./bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js')
+   .pipe(gulp.dest('./dist/scripts'));
+});
+
 
 gulp.task('copy', ['copyfonts_awesome',
                    'copyfonts_awesome_css',
                    'copyfonts_bootstrap',
                    'copy_bootstrap',
+                   'copy_ui_bootstrap',
                    'copy_angular',
                    'copy_angular_resource',
                    'copy_angular_ui_router']);

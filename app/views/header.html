@@ -16,16 +16,18 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                <a type="button" 
+                         ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed"
+                         class="navbar-toggle">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" ui-sref="app"><img src="images/logo.png" height=30 width=41></a>
+                </a>
+                <a class="navbar-brand" ui-sref="app" href="#"><img src="images/logo.png" height=30 width=41></a>
             </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+            <div id="navbar" class="navbar-collapse collapse" uib-collapse="navCollapsed">
+                <ul class="nav navbar-nav" ng-click="navCollapsed = true">
                     <li><a ui-sref="app">
                         <span class="glyphicon glyphicon-home"
                          aria-hidden="true"></span> Home</a></li>
