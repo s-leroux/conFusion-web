@@ -133,11 +133,12 @@ angular.module('confusionApp')
                 push back the changes on the serve using a PUT request.
               */
               dish.$update(function() {
-                  this.comment = { comment: "", rating: 5, author: "", date: null };                
+              //    this.comment = { comment: "", rating: 5, author: "", date: null };                
               });
             };
 
             this.reset = function(form) {
+              this.comment = { comment: "", rating: 5, author: "", date: null };                
               form.$setPristine();
             };
         })
