@@ -1,5 +1,15 @@
 
     <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+               <ul class="breadcrumb">
+                   <li><a href="#">Home</a></li>
+                   <li><a href="#menu">Menu</a></li>
+                   <li class="active">{{dish.name}}</li>
+               </ul>
+            </div>
+        </div>
+
         <div class="col-xs-12" ng-if="!showDish">
             <h3>{{message}}</h3>
         </div>
