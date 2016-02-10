@@ -11,6 +11,9 @@ angular.module('confusionApp', ['ui.router', 'ngResource'])
                     'header': {
                         templateUrl : 'views/header.html',
                     },
+                    'jumbotron': {
+                        templateUrl : 'views/jumbotron.html',
+                    },
                     'content': {
                         templateUrl : 'views/home.html',
                         controller  : 'IndexController'
@@ -26,6 +29,7 @@ angular.module('confusionApp', ['ui.router', 'ngResource'])
             .state('app.aboutus', {
                 url:'aboutus',
                 views: {
+                    'jumbotron@': {},
                     'content@': {
                         templateUrl : 'views/aboutus.html',
                         controller  : 'AboutController'                  
@@ -37,6 +41,7 @@ angular.module('confusionApp', ['ui.router', 'ngResource'])
             .state('app.contactus', {
                 url:'contactus',
                 views: {
+                    'jumbotron@': {},
                     'content@': {
                         templateUrl : 'views/contactus.html',
                         controller  : 'ContactController'                  
@@ -48,6 +53,7 @@ angular.module('confusionApp', ['ui.router', 'ngResource'])
             .state('app.menu', {
                 url: 'menu',
                 views: {
+                    'jumbotron@': {},
                     'content@': {
                         templateUrl : 'views/menu.html',
                         controller  : 'MenuController'
@@ -59,6 +65,7 @@ angular.module('confusionApp', ['ui.router', 'ngResource'])
             .state('app.dishdetails', {
                 url: 'menu/:id',
                 views: {
+                    'jumbotron@': {},
                     'content@': {
                         templateUrl : 'views/dishdetail.html',
                         controller  : 'DishDetailController',
