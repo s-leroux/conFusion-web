@@ -96,8 +96,9 @@ angular.module('confusionApp')
             };
         }])
 
-        .controller('DishDetailController', ['$scope', 'DishDAO', 'URLResolver',
-                 '$stateParams', function($scope, DishDAO, $stateParams, URLResolver) {
+        .controller('DishDetailController', ['$scope', 'DishDAO',
+                 '$stateParams', 'URLResolver',
+                 function($scope, DishDAO, $stateParams, URLResolver) {
             $scope.dish = {};
             $scope.showDish = false;
             $scope.message = "Loading...";
