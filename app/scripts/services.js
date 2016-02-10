@@ -53,7 +53,7 @@ angular.module('confusionApp')
     .factory('LeaderDAO', ['$resource', 'baseURL', function($resource, baseURL) {
         return $resource(baseURL+'leadership/:id', null, {
             // extra methods
-            getByRole: { params: {abbr:'@role'}, method: 'GET', isArray: true }
+            getByRole: { params: {abbr:'@abbr'}, method: 'GET', isArray: true }
         });
     }])
 

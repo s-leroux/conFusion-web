@@ -174,7 +174,7 @@ angular.module('confusionApp')
                         $scope.messagePromotion = "Error: "+response.status + " " + response.statusText;
                     }
                 );
-                LeaderDAO.getByRole({role:'EC'}, 
+                LeaderDAO.getByRole({abbr:'WD'}, 
                     function(data){
                         // As I query by an attribute (abbr) instead
                         // of by id, the response is an array
@@ -195,7 +195,7 @@ angular.module('confusionApp')
                 $scope.message = "Loading...";
                 $scope.urlResolve = URLResolver;
 
-                LeaderDAO.query(null, 
+                LeaderDAO.query({_sort: "id"}, 
                     function(data){
                         $scope.leaders = data;
                         $scope.showLeaders = true;
