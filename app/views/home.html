@@ -22,7 +22,7 @@
                     <div class="media-body">
                         <h2 class="media-heading">{{featured.name}}
                            <span class="label label-danger label-xs">{{featured.label}}</span>
-                           <span class="badge">{{featured.price}}</span>
+                           <span class="badge">{{featured.price | curency}}</span>
                         </h2>
                         <p>{{featured.description}}</p>
                         <p><a class="btn btn-primary btn-xs" ui-sref="app.dishdetails({id: featured.id})">More &raquo;</a></p>
